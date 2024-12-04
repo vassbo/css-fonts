@@ -7,7 +7,11 @@
     "scripts": {
         "test": "node tests/test.js"
     },
-    "author": "Vassbo",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/vassbo/css-fonts"
+    },
+    "author": "vassbo",
     "license": "ISC",
     "dependencies": {
         "font-scanner": "github:vassbo/font-scanner"

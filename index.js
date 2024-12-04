@@ -48,8 +48,6 @@ export default async function getFonts() {
 
 getFonts()
 
-// WIP test with actual CSS
-
 function removeStyleType(value, extra = false) {
     // known font
     if (value === "MT Extra") return value
