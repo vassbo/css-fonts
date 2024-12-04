@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Font Test</title>
+    </head>
+
+    <div class="fonts"></div>
+
+    <body>
+        <script>
+            // browser default: "Times New Roman"
+
+            fetch("./fonts.json")
+                .then((response) => response.json())
+                .then(renderFonts)
+
+            function renderFonts(fonts) {
+                console.log(fonts)
+
+                let html = ""
+                fonts.forEach((f) => {
+                    html += `<p style="border: 2px solid blue;${f.fonts[f.default].css}">${f.family}</p>`
+                    f.fonts.forEach((font, i) => {
+                        if (i === f.default) return
+
+                        html += '<div style="position: relative;display: flex;">'
+                        html += `<p style="${font.css}">${font.name}</p>`
+                        html += `<p class="tester" style="${font.css};font-family: initial;pointer-events: none;position: absolute;">
+                            ${font.name}
+                        ${i === f.default ? "--DEFAULT" : ""}
+                            </p>`
+                        html += "</div>"
+                    })
+                })
+
+                const fontsElem = document.querySelector(".fonts")
+                fontsElem.innerHTML = html
+            }
+
+            // this font does not work:
+            // Gill Sans - 'Gill Sans Ultra Bold'
+        </script>
+    </body>
+</html>
