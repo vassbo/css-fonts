@@ -1,6 +1,7 @@
-import fontManager from "font-scanner"
+// import fontManager from "font-scanner"
 
 export default async function getFonts() {
+    const fontManager = (await import("font-scanner")).default
     const fonts = await fontManager.getAvailableFonts()
 
     /** @type {{[key: string]: (import("font-scanner").FontDescriptor)[]}} */
@@ -45,8 +46,6 @@ export default async function getFonts() {
 
     return fontFamilies
 }
-
-getFonts()
 
 function removeStyleType(value, extra = false) {
     // known font

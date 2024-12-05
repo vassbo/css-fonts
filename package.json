@@ -1,12 +1,12 @@
 {
     "name": "css-fonts",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "description": "Get system fonts organized by family",
     "main": "index.js",
     "types": "index.d.ts",
-    "type": "module",
     "scripts": {
-        "test": "node tests/test.js"
+        "test": "node tests/test-esm.mjs",
+        "test-require": "node tests/test-cjs.js"
     },
     "repository": {
         "type": "git",
