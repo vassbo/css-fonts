@@ -54,7 +54,7 @@ function removeStyleType(value: string, extra: boolean = false) {
     // known font
     if (value === "MT Extra") return value
 
-    let stylesToRemove = ["Demi", "Bold", "Light", "Medium", "Condensed", "Cond", "Heavy", "Extra", "Extended", " Ext ", "Italic", "Wide", "Semi", "Backslant"]
+    let stylesToRemove = ["Semibold", "Semi", "Demi", "Bold", "Light", "Medium", "Condensed", "Cond", "Heavy", "Extra", "Extended", " Ext ", "Italic", "Wide", "Backslant"]
     if (extra) stylesToRemove.push(...["Ultra"])
 
     // replace if not at start of word
@@ -65,14 +65,17 @@ function removeStyleType(value: string, extra: boolean = false) {
 }
 
 function getCSS(font: FontDescriptor) {
+    // should have used name for all, but some system styles are in native language, and that does not work
     // let css = `font-family: '${removeStyleType(font.name, true)}';`
     // let css = `font-family: '${removeStyleType([font.family, font.style].join(" "), true)}';`
     let family = removeStyleType(font.family, true)
+    const knownCustom = ["Segoe UI Variable", "Sitka"]
+    if (knownCustom.includes(font.family)) family = removeStyleType(font.name, true)
 
-    if (font.postscriptName.includes("Rounded")) family += " Rounded"
-    else if (font.postscriptName.includes("Outline")) family += " Outline"
-    else if (font.postscriptName.includes("CAPS")) family += " CAPS"
-    else if (font.postscriptName.includes("Condensed")) family += " Condensed"
+    const specialStyles = ["Rounded", "Outline", "CAPS", "Condensed"]
+    specialStyles.forEach((keyword) => {
+        if (font.postscriptName.includes(keyword) && !family.includes(keyword)) family += ` ${keyword}`
+    })
 
     // https://developer.mozilla.org/en-US/docs/Web/CSS/font
     // font-style font-weight font-stretch font-size font-family
