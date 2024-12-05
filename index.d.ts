@@ -16,5 +16,5 @@ declare module "css-fonts" {
      *
      * @returns Fonts orgainzed by family
      */
-    export function getFonts(): Promise<Family[]>
+    export default function getFonts(): Promise<Family[]>
 }
