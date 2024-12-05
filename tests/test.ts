@@ -1,5 +1,6 @@
-const fs = require("fs")
-const getFonts = require("../index.js").default
+import getFonts from "../index.js"
+// @ts-ignore
+import fs from "fs"
 
 test()
 async function test() {

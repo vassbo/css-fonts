@@ -1,12 +1,13 @@
 {
     "name": "css-fonts",
-    "version": "1.0.4",
+    "version": "1.0.6",
     "description": "Get system fonts organized by family",
-    "main": "index.js",
-    "types": "index.d.ts",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "type": "commonjs",
     "scripts": {
-        "test": "node tests/test-esm.mjs",
-        "test-require": "node tests/test-cjs.js"
+        "build": "tsc",
+        "test": "node dist/tests/test.js"
     },
     "repository": {
         "type": "git",
@@ -16,5 +17,8 @@
     "license": "ISC",
     "dependencies": {
         "font-scanner": "github:vassbo/font-scanner"
+    },
+    "devDependencies": {
+        "typescript": "^5.7.2"
     }
 }

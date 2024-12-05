@@ -1,10 +1,9 @@
-// import fontManager from "font-scanner"
+import fontManager, { FontDescriptor } from "font-scanner"
 
 export default async function getFonts() {
-    const fontManager = (await import("font-scanner")).default
-    const fonts = await fontManager.getAvailableFonts()
+    // @ts-ignore
+    const fonts: FontDescriptor[] = await fontManager.getAvailableFonts()
 
-    /** @type {{[key: string]: (import("font-scanner").FontDescriptor)[]}} */
     let families = fonts.reduce((acc, font) => {
         let key = font.family
         key = removeStyleType(key)
@@ -13,7 +12,7 @@ export default async function getFonts() {
         acc[key].push(font)
 
         return acc
-    }, {})
+    }, {} as { [key: string]: FontDescriptor[] })
 
     const fontFamilies = Object.values(families)
         .map((familyList) => {
@@ -47,7 +46,7 @@ export default async function getFonts() {
     return fontFamilies
 }
 
-function removeStyleType(value, extra = false) {
+function removeStyleType(value: string, extra: boolean = false) {
     // known font
     if (value === "MT Extra") return value
 
@@ -61,7 +60,7 @@ function removeStyleType(value, extra = false) {
     return value
 }
 
-function getCSS(/** @type import("font-scanner").FontDescriptor */ font) {
+function getCSS(font: FontDescriptor) {
     // let css = `font-family: '${removeStyleType(font.name, true)}';`
     // let css = `font-family: '${removeStyleType([font.family, font.style].join(" "), true)}';`
     let family = removeStyleType(font.family, true)
@@ -73,11 +72,12 @@ function getCSS(/** @type import("font-scanner").FontDescriptor */ font) {
 
     // https://developer.mozilla.org/en-US/docs/Web/CSS/font
     // font-style font-weight font-stretch font-size font-family
-    const css = `font: ${font.italic ? "italic" : "normal"} ${font.weight} ${stretch[font.width]} 1em '${family}';`
+    const css = `font: ${font.italic ? "italic" : "normal"} ${font.weight} ${stretch[font.width as StretchKeys]} 1em '${family}';`
 
     return css
 }
 
+type StretchKeys = keyof typeof stretch
 const stretch = {
     1: "ultra-condensed",
     2: "extra-condensed",
