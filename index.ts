@@ -1,5 +1,17 @@
 import fontManager, { FontDescriptor } from "font-scanner"
 
+export interface Family {
+    family: string
+    default: number
+    fonts: Font[]
+}
+export interface Font {
+    path: string
+    name: string
+    style: string
+    css: string
+}
+
 export default async function getFonts() {
     // @ts-ignore
     const fonts: FontDescriptor[] = await fontManager.getAvailableFonts()
@@ -14,7 +26,7 @@ export default async function getFonts() {
         return acc
     }, {} as { [key: string]: FontDescriptor[] })
 
-    const fontFamilies = Object.values(families)
+    const fontFamilies: Family[] = Object.values(families)
         .map((familyList) => {
             const family = removeStyleType(familyList[0].family, true)
 
@@ -24,15 +36,7 @@ export default async function getFonts() {
             let defaultFont = familyList.length === 1 ? 0 : familyList.findIndex((a) => a.name.replace("Regular", "").replace("Medium", "").trim() === family)
             if (defaultFont < 0) defaultFont = 0
 
-            /**
-             * @type { {
-             * path: string
-             * name: string
-             * style: string
-             * css: string
-             * }[] }
-             */
-            let fonts = familyList.map((font) => ({
+            let fonts: Font[] = familyList.map((font) => ({
                 path: font.path,
                 name: font.name,
                 style: font.style,
