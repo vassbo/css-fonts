@@ -13,8 +13,13 @@ export interface Font {
 }
 
 export default async function getFonts() {
-    // @ts-ignore
-    const fonts: FontDescriptor[] = await fontManager.getAvailableFonts()
+    let fonts: FontDescriptor[] = []
+    try {
+        fonts = await fontManager.getAvailableFonts()
+    } catch (err) {
+        console.error("css-font: font-scanner error:", err)
+        return []
+    }
 
     let families = fonts.reduce((acc, font) => {
         let key = font.family

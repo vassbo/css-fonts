@@ -1,7 +1,12 @@
 {
     "name": "css-fonts",
-    "version": "1.0.8",
+    "version": "1.0.9",
     "description": "Get system fonts organized by family",
+    "keywords": [
+        "css",
+        "system",
+        "fonts"
+    ],
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
     "type": "commonjs",
