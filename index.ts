@@ -1,4 +1,4 @@
-import fontManager, { FontDescriptor } from "font-scanner"
+import type { FontDescriptor } from "font-scanner"
 
 export interface Family {
     family: string
@@ -15,6 +15,7 @@ export interface Font {
 export default async function getFonts() {
     let fonts: FontDescriptor[] = []
     try {
+        const fontManager = await import("font-scanner")
         fonts = await fontManager.getAvailableFonts()
     } catch (err) {
         console.error("css-font: font-scanner error:", err)
