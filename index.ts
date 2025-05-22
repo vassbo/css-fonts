@@ -57,6 +57,8 @@ export default async function getFonts() {
 }
 
 function removeStyleType(value: string, extra: boolean = false) {
+    if (typeof value !== "string") return ""
+
     // known font
     if (value === "MT Extra") return value
 
@@ -80,7 +82,7 @@ function getCSS(font: FontDescriptor) {
 
     const specialStyles = ["Rounded", "Outline", "CAPS", "Condensed"]
     specialStyles.forEach((keyword) => {
-        if (font.postscriptName.includes(keyword) && !family.includes(keyword)) family += ` ${keyword}`
+        if (font.postscriptName?.includes(keyword) && !family.includes(keyword)) family += ` ${keyword}`
     })
 
     // https://developer.mozilla.org/en-US/docs/Web/CSS/font
